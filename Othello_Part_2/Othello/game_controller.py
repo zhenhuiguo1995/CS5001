@@ -10,12 +10,12 @@ class GameController():
     def turn(self, x, y): 
         x //= self.board.space
         y //= self.board.space
-        if self.board.is_legal((x, y)):
+        if self.board.is_legal(x, y):
             if self.take_turns:
-                self.first_player.move((x, y))
+                self.first_player.move(x, y)
                 self.take_turns = False
             else:
-                self.second_player.move((x, y))
+                self.second_player.move(x, y)
                 self.take_turns = True    
         else:
             print("Not an legal move, try again!")

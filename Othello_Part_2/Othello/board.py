@@ -17,7 +17,7 @@ class Board():
         self.add_tile((middle_x, middle_y), "white")
 
 
-    def is_legal(self, (x, y)):
+    def is_legal(self, x, y):
         """Decides if a move is legal"""
         # Current implementation: no tile objects already exists here
         if (x, y) not in self.on_board:
@@ -67,25 +67,25 @@ class Board():
                     count += 1
         return count
 
-    def has_move(self, (x, y)):
+    def has_move(self, x, y):
         """determines if there's more legal move to make
         if there's None, return False
         If there's some: return True"""
         pass
     
-    def flip_horizontal(self, (x, y), color):
+    def flip_horizontal(self, x, y, color):
         """determines if there's some tiles to flip horizontally
         if yes, return the set of position of the tiles that will be flipped
         if not, return False"""
         pass
     
-    def flip_vertically(self, (x, y), color):
+    def flip_vertically(self, x, y, color):
         """determines if there's some tiles to flip horizontally
         if yes, return the set of position of the tiles that will be flipped
         if not, return False"""
         pass        
     
-    def flip_diagonally(self, (x, y), color):
+    def flip_diagonally(self, x, y, color):
         """determines if there's some tiles to flip along the diagonal
         if yes, return the set of position of the tiles that will be flipped
         if not, return False"""
