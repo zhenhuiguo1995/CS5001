@@ -8,18 +8,19 @@ class GameController():
         self.take_turns = True
         self.board = board
 
-    def turn(self, x, y): 
+    def turn(self, x, y):
         x //= self.board.space
         y //= self.board.space
-        if self.board.is_legal(x, y):
-            if self.take_turns:
-                self.first_player.move(x, y)
-                self.take_turns = False
-            else:
-                self.second_player.move(x, y)
-                self.take_turns = True    
+        if self.take_turns:
+            temp = self.board.legal_move(x, y, self.first_player.color)
+            if temp:
+                self.first_player.move(x, y, temp)
+                self.take_turns = not self.take_turns
         else:
-            print("Not an legal move, try again!")
+            temp = self.board.legal_move(x, y, self.second_player.color)
+            if temp:
+                self.second_player.move(x, y, temp)
+                self.take_turns = not self.take_turns
 
     def update(self):
         if self.board.position_left() == 0:
@@ -28,7 +29,7 @@ class GameController():
             x = self.board.length//2 - self.board.space//2
             y = self.board.length//2
             if self.board.sum_of_black() == self.board.sum_of_white():
-                text("Tie Game!!!", x, y)        
+                text("Tie Game!!!", x, y)
             elif self.board.sum_of_black() >= self.board.sum_of_white():
                 text("Black wins", x, y)
             else:
@@ -37,3 +38,14 @@ class GameController():
                 x, y + self.board.space//2)
             text("White: {0}".format(self.board.sum_of_white()),
                 x, y + self.board.space)
+            answer = input('enter your name:')
+            if answer:
+                print("Hi", answer)
+            elif answer == '':
+                print('empty string')
+            else:
+                print(answer)
+
+    def input(self, message=''):
+        from javax.swing import JOptionPane
+        return JOptionPane.showInputDialog(frame, message)

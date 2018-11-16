@@ -17,19 +17,32 @@ class Board():
         self.add_tile(middle_x - 1, middle_y, "black")
         self.add_tile(middle_x, middle_y, "white")
 
-    def is_legal(self, x, y):
-        """Decides if a move is legal"""
-        # Current implementation: no tile objects already exists here
-        if (x, y) not in self.on_board:
-            return True
-        else:
-            return False
-
     def add_tile(self, x, y, color):
         x_coordinate = x * self.space + self.space//2
         y_coordinate = y * self.space + self.space//2
         self.tiles[x][y] = Tile(x_coordinate, y_coordinate, self.space, color)
         self.on_board.add((x, y))
+
+    def legal_move(self, x, y, color):
+        flip = self.has_flip(x, y, color)
+        if flip and (x, y) not in self.on_board:
+            return flip
+        else:
+            return False
+
+    def has_flip(self, x, y, color):
+        """determines if there's more legal move to make
+        if there's None, return False
+        If there's some: return True"""
+        hor_flip = self.flip_horizontal(x, y, color)
+        ver_flip = self.flip_vertical(x, y, color)
+        diag_flip = self.flip_diagonal(x, y, color)
+        flips = hor_flip.union(ver_flip).union(diag_flip)
+        return flips
+
+    def flip(self, flips, color):
+        for pair in flips:
+            self.tiles[pair[0]][pair[1]].color = color
 
     def display(self):
         """Display the board"""
@@ -52,7 +65,7 @@ class Board():
         return num
 
     def sum_of_white(self):
-        count = 0 
+        count = 0
         for rows in self.tiles:
             for tile in rows:
                 if tile.color == "white":
@@ -66,24 +79,6 @@ class Board():
                 if tile.color == "black":
                     count += 1
         return count
-
-    def flip(self, temp, color):
-        for pair in temp:
-            self.tiles[pair[0]][pair[1]].color = color
-
-    def has_move(self, x, y, color):
-        """determines if there's more legal move to make
-        if there's None, return False
-        If there's some: return True"""
-        hor_flip = self.flip_horizontal(x, y, color)
-        if hor_flip:
-            self.flip(hor_flip, color)
-        ver_flip = self.flip_vertical(x, y, color)
-        if ver_flip:
-            self.flip(ver_flip, color)
-        diag_flip = self.flip_diagonal(x, y, color)
-        if diag_flip:
-            self.flip(diag_flip, color)
 
     def flip_horizontal(self, x, y, color):
         """determines if there's some tiles to flip horizontally

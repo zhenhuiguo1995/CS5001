@@ -12,4 +12,3 @@ class Tile():
         if self.color == "black":
             fill(0, 0, 0)
         ellipse(self.x, self.y, self.diameter, self.diameter)
-            

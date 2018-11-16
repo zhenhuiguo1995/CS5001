@@ -8,8 +8,7 @@ class Player():
         self.board = board
         self.color = color
 
-    def move(self, x, y):
+    def move(self, x, y, flips):
         self.board.add_tile(x, y, self.color)
-        self.board.has_move(x, y, self.color)
-        # place the tile on the board, does not flip at the moment
-        # self.board.flip()
+        self.board.flip(flips, self.color)
+        # place the tile on the board and flips the tiles
