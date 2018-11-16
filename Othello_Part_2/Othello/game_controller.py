@@ -1,5 +1,6 @@
 from player import Player
 
+
 class GameController():
     def __init__(self, first_player, second_player, board):
         self.first_player = first_player

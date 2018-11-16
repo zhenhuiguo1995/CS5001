@@ -11,15 +11,16 @@ first_player = Player("Human", board, "black")
 second_player = Player("Computer", board, "white")
 game_controller = GameController(first_player, second_player, board)
 
+
 def setup():
     size(LENGTH, LENGTH)
     colorMode(RGB, 1)
     strokeWeight(2)
 
+
 def draw():
     tiles.display()
     board.display()
     game_controller.update()
-    if mousePressed:
+    if mousePressed and mouseX < LENGTH and mouseY < LENGTH:
         game_controller.turn(mouseX, mouseY)
-

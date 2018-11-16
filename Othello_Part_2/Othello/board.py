@@ -1,5 +1,6 @@
 from tile import Tile
 
+
 class Board():
     """Draws the board and handles interaction between
     player and computer"""
@@ -11,11 +12,10 @@ class Board():
         # initializes the middle of the board
         middle_x = len(self.tiles)//2
         middle_y = len(self.tiles[0])//2
-        self.add_tile((middle_x - 1, middle_y - 1), "white")
-        self.add_tile((middle_x, middle_y - 1), "black")
-        self.add_tile((middle_x - 1, middle_y), "black")
-        self.add_tile((middle_x, middle_y), "white")
-
+        self.add_tile(middle_x - 1, middle_y - 1, "white")
+        self.add_tile(middle_x, middle_y - 1, "black")
+        self.add_tile(middle_x - 1, middle_y, "black")
+        self.add_tile(middle_x, middle_y, "white")
 
     def is_legal(self, x, y):
         """Decides if a move is legal"""
@@ -25,11 +25,11 @@ class Board():
         else:
             return False
 
-    def add_tile(self, pair, color):
-        x_coordinate = pair[0] * self.space + self.space//2
-        y_coordinate = pair[1] * self.space + self.space//2
-        self.tiles[pair[0]][pair[1]] = Tile(x_coordinate, y_coordinate, self.space, color)
-        self.on_board.add(pair)
+    def add_tile(self, x, y, color):
+        x_coordinate = x * self.space + self.space//2
+        y_coordinate = y * self.space + self.space//2
+        self.tiles[x][y] = Tile(x_coordinate, y_coordinate, self.space, color)
+        self.on_board.add((x, y))
 
     def display(self):
         """Display the board"""
@@ -58,35 +58,140 @@ class Board():
                 if tile.color == "white":
                     count += 1
         return count
-    
+
     def sum_of_black(self):
-        count = 0 
+        count = 0
         for rows in self.tiles:
             for tile in rows:
                 if tile.color == "black":
                     count += 1
         return count
 
-    def has_move(self, x, y):
+    def flip(self, temp, color):
+        for pair in temp:
+            self.tiles[pair[0]][pair[1]].color = color
+
+    def has_move(self, x, y, color):
         """determines if there's more legal move to make
         if there's None, return False
         If there's some: return True"""
-        pass
-    
+        hor_flip = self.flip_horizontal(x, y, color)
+        if hor_flip:
+            self.flip(hor_flip, color)
+        ver_flip = self.flip_vertical(x, y, color)
+        if ver_flip:
+            self.flip(ver_flip, color)
+        diag_flip = self.flip_diagonal(x, y, color)
+        if diag_flip:
+            self.flip(diag_flip, color)
+
     def flip_horizontal(self, x, y, color):
         """determines if there's some tiles to flip horizontally
         if yes, return the set of position of the tiles that will be flipped
         if not, return False"""
-        pass
-    
-    def flip_vertically(self, x, y, color):
+        flip = set()
+        # search left
+        if x >= 2 and (x - 1, y) in self.on_board and self.tiles[x - 1][y].color != color:
+            temp = x - 1
+            pending = set()
+            while temp >= 0 and (temp, y) in self.on_board \
+                and self.tiles[temp][y].color != color:
+                    pending.add((temp, y))
+                    temp -= 1
+            if temp >= 0 and (temp, y) in self.on_board \
+                and self.tiles[temp][y].color == color:
+                flip = flip.union(pending)
+        # search right
+        if x <= len(self.tiles[0]) - 2 and (x + 1, y) in self.on_board \
+            and self.tiles[x + 1][y].color != color:
+            temp = x + 1
+            pending = set()
+            while temp < self.tiles[0] and (temp, y) in self.on_board \
+                and self.tiles[temp][y].color != color:
+                    pending.add((temp, y))
+                    temp += 1
+            if temp < self.tiles[0] and (temp, y) in self.on_board \
+                and self.tiles[temp][y].color == color:
+                    flip = flip.union(pending)
+        return flip
+
+    def flip_vertical(self, x, y, color):
         """determines if there's some tiles to flip horizontally
         if yes, return the set of position of the tiles that will be flipped
         if not, return False"""
-        pass        
-    
-    def flip_diagonally(self, x, y, color):
+        flip = set()
+        # search upwards
+        if y >= 2 and (x, y - 1) in self.on_board and self.tiles[x][y - 1].color != color:
+            temp = y - 1
+            pending = set()
+            while temp >= 0 and (x, temp) in self.on_board \
+                and self.tiles[x][temp].color != color:
+                    pending.add((x, temp))
+                    temp -= 1
+            if temp >= 0 and (x, temp) in self.on_board \
+                and self.tiles[x][temp].color == color:
+                flip = flip.union(pending)
+        # search downwards
+        if y <= len(self.tiles[0]) - 2 and (x, y + 1) in self.on_board \
+            and self.tiles[x][y + 1].color != color:
+            temp = y + 1
+            pending = set()
+            while temp < self.tiles[0] and (x, temp) in self.on_board \
+                and self.tiles[x][temp].color != color:
+                    pending.add((x, temp))
+                    temp += 1
+            if temp < self.tiles[0] and (x, temp) in self.on_board \
+                and self.tiles[x][temp].color == color:
+                    flip = flip.union(pending)
+        return flip
+
+    def flip_diagonal(self, x, y, color):
         """determines if there's some tiles to flip along the diagonal
         if yes, return the set of position of the tiles that will be flipped
         if not, return False"""
-        pass
+        flip = set()
+        # search upper-left
+        if x >= 2 and y >= 2 and (x - 1, y - 1) in self.on_board and self.tiles[x - 1][y - 1].color != color:
+            temp_x = x - 1
+            temp_y = y - 1
+            pending = set()
+            while temp_x >= 0 and temp_y >= 0 and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color != color:
+                pending.add((temp_x, temp_y))
+                temp_x -= 1
+                temp_y -= 1
+            if temp_x >= 0 and temp_y >= 0 and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color == color:
+                flip = flip.union(pending)
+        # search lower-right
+        if x <= len(self.tiles[0]) - 2 and y <= len(self.tiles[0]) - 2 and (x + 1, y + 1) in self.on_board and self.tiles[x + 1][y + 1].color != color:
+            temp_x = x + 1
+            temp_y = y + 1
+            pending = set()
+            while temp_x < self.tiles[0] and temp_y < self.tiles[0] and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color != color:
+                pending.add((temp_x, temp_y))
+                temp_x += 1
+                temp_y += 1
+            if temp_x < self.tiles[0] and temp_y < self.tiles[0] and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color == color:
+                flip = flip.union(pending)
+        # search upper-right
+        if x <= len(self.tiles[0]) - 2 and y >= 2 and (x + 1, y - 1) in self.on_board and self.tiles[x + 1][y - 1].color != color:
+            temp_x = x + 1
+            temp_y = y - 1
+            pending = set()
+            while temp_x < self.tiles[0] and temp_y >= 0 and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color != color:
+                pending.add((temp_x, temp_y))
+                temp_x += 1
+                temp_y -= 1
+            if temp_x < self.tiles[0] and temp_y >= 0 and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color == color:
+                flip = flip.union(pending)
+        # search lower-left
+        if x >= 2 and y <= len(self.tiles[0]) - 2 and (x - 1, y + 1) in self.on_board and self.tiles[x - 1][y + 1].color != color:
+            temp_x = x - 1
+            temp_y = y + 1
+            pending = set()
+            while temp_x < self.tiles[0] and temp_y < self.tiles[0] and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color != color:
+                pending.add((temp_x, temp_y))
+                temp_x -= 1
+                temp_y += 1
+            if temp_x < self.tiles[0] and temp_y < self.tiles[0] and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color == color:
+                flip = flip.union(pending)
+        return flip
