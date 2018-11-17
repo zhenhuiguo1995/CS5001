@@ -1,3 +1,9 @@
-alice 1
-alfred 2
-allen 0
+alfred 14
+alfred 10
+alfred 10
+allen 8
+alfred 6
+alice 5
+allen 4
+allen 1
+allen 1
