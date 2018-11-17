@@ -12,17 +12,24 @@ class GameController():
         x //= self.board.space
         y //= self.board.space
         if self.take_turns:
-            temp = self.board.legal_move(x, y, self.first_player.color)
-            if temp:
-                self.first_player.move(x, y, temp)
+            if self.first_player.has_legal_move():
+                temp = self.board.legal_move(x, y, self.first_player.color)
+                if temp:
+                    self.first_player.move(x, y, temp)
+                    self.take_turns = not self.take_turns
+            else:
                 self.take_turns = not self.take_turns
         else:
-            temp = self.board.legal_move(x, y, self.second_player.color)
-            if temp:
-                self.second_player.move(x, y, temp)
+            if self.second_player.has_legal_move():
+                temp = self.board.legal_move(x, y, self.second_player.color)
+                if temp:
+                    self.second_player.move(x, y, temp)
+                    self.take_turns = not self.take_turns
+            else:
                 self.take_turns = not self.take_turns
 
     def update(self):
+        print(self.board.position_left())
         if self.board.position_left() == 0:
             fill(1, 0, 0)
             textSize(30)

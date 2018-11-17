@@ -9,7 +9,15 @@ class Board():
         self.space = space
         self.tiles = tile.tiles
         self.on_board = set()
-        # initializes the middle of the board
+        self.to_fill = set()
+        self.initialize()
+
+    def initialize(self):
+        # initialize the to_fill set
+        # put four tiles on the middle of the board
+        for i in range(self.length//self.space):
+            for j in range(self.length//self.space):
+                self.to_fill.add((i, j))
         middle_x = len(self.tiles)//2
         middle_y = len(self.tiles[0])//2
         self.add_tile(middle_x - 1, middle_y - 1, "white")
@@ -22,6 +30,7 @@ class Board():
         y_coordinate = y * self.space + self.space//2
         self.tiles[x][y] = Tile(x_coordinate, y_coordinate, self.space, color)
         self.on_board.add((x, y))
+        self.to_fill.remove((x, y))
 
     def legal_move(self, x, y, color):
         flip = self.has_flip(x, y, color)
@@ -29,6 +38,15 @@ class Board():
             return flip
         else:
             return False
+
+    def has_legal_move(self, color):
+        for pair in self.to_fill:
+            if self.legal_move(pair[0], pair[1], color):
+                return True
+        return False
+
+    def position_left(self):
+        return len(self.to_fill)
 
     def has_flip(self, x, y, color):
         """determines if there's more legal move to make
@@ -55,14 +73,6 @@ class Board():
             for j in range(len(self.tiles[0])):
                 if self.tiles[i][j] is not None:
                     self.tiles[i][j].display()
-
-    def position_left(self):
-        num = 0
-        for rows in self.tiles:
-            for tile in rows:
-                if tile is None:
-                    num += 1
-        return num
 
     def sum_of_white(self):
         count = 0

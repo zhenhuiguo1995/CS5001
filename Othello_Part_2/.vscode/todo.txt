@@ -1,0 +1,9 @@
+Next steps:
+1. add a has_legal_move in the Board class, which determins if there's 
+any legal moves for the current player
+-> Brutal Force way: for all set not in the on_board set, add to check it's flips 
+
+2. correspondingly, modify game_controller so that when there's no
+legal move for the current player, switch to the next player
+
+3. write the name and score to a file named "scores.txt"
