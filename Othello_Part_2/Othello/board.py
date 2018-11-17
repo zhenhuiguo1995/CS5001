@@ -78,7 +78,7 @@ class Board():
         count = 0
         for rows in self.tiles:
             for tile in rows:
-                if tile.color == "white":
+                if tile is not None and tile.color == "white":
                     count += 1
         return count
 
@@ -86,7 +86,7 @@ class Board():
         count = 0
         for rows in self.tiles:
             for tile in rows:
-                if tile.color == "black":
+                if tile is not None and tile.color == "black":
                     count += 1
         return count
 

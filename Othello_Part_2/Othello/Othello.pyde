@@ -3,7 +3,7 @@ from game_controller import GameController
 from player import Player
 from tiles import Tiles
 
-LENGTH = 800
+LENGTH = 400
 SPACE = 100
 tiles = Tiles(LENGTH, SPACE)
 board = Board(LENGTH, SPACE, tiles)

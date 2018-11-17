@@ -1,0 +1,5 @@
+Next steps:
+1.solve the problem that in the last step, only after the player entered his name will 
+the last tile be displayed on the boad
+
+2. Add an AI for computer

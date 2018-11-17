@@ -1,9 +1,3 @@
-alfred 14
-alfred 10
-alfred 10
-allen 8
-alfred 6
-alice 5
-allen 4
-allen 1
-allen 1
+Justin 12
+Allen 9
+francis 5
