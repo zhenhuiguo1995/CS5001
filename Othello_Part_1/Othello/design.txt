@@ -72,3 +72,6 @@ class game_control_center():
             # judges which player should play this turn
             # and make a move for that player upon receiving mouse click
 
+
+# Testing
+if mouse pressed a position beyond the board: -> error
