@@ -1,6 +1,10 @@
+will 52
 alfred 50
 disney 40
+edward 36
+??? 31
 ai 22
+jimmy 18
 fuck 15
 alexa 15
 alice 14

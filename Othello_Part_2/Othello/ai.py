@@ -28,18 +28,26 @@ class AI(Player):
         if upper_left and len(upper_left) > len(flips):
             max_flip_postion = (0, 0)
             flips = upper_left
+        if upper_left is False:
+            print("Upper left conrer can not be occupied")
         upper_right = self.board.legal_move(length - 1, 0, self.color)
         if upper_right and len(upper_right) > len(flips):
             max_flip_postion = (length - 1, 0)
             flips = upper_right
-        lower_left = self.board.legal_move(length - 1, 0, self.color)
+        if upper_right is False:
+            print("Upper right conrer can not be occupied")
+        lower_left = self.board.legal_move(0, length - 1, self.color)
         if lower_left and len(lower_left) > len(flips):
             max_flip_postion = (0, length - 1)
             flips = lower_left
+        if lower_left is False:
+            print("lower left conrer can not be occupied")
         lower_right = self.board.legal_move(length - 1, length - 1, self.color)
         if lower_right and len(lower_right) > len(flips):
             max_flip_postion = (length - 1, length - 1)
             flips = lower_right
+        if lower_right is False:
+            print("lower right corner cannot be occupied")
         if len(flips) > 0:
             return [max_flip_postion, flips]
         else:
@@ -60,7 +68,18 @@ class AI(Player):
 
     def prioritize(self):
         temp = self.occupy_corner()
+        length = self.board.length
+        print(temp)
         if temp:
+            if (0, 0) in temp:
+                print("(0, 0) can be reached")
+            if (0, length - 1) in temp:
+                print("(0, 7) can be reached")
+            if (length - 1, 0) in temp:
+                print("(7, 0) can be reached")
+            if (length - 1, length - 1) in temp:
+                print("(7, 7) can be reached")
             return temp
         else:
+            print("No corner can be occupied")
             return self.greedy_strategy()
