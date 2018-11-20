@@ -11,30 +11,6 @@ class GameController():
         self.finished = False
         self.no_legal_move = False
 
-    def turn(self, x, y):
-        x //= self.board.space
-        y //= self.board.space
-        if self.take_turns:
-            if self.first_player.has_legal_move():
-                temp = self.board.legal_move(x, y, self.first_player.color)
-                if temp:
-                    self.first_player.move(x, y, temp)
-                    self.take_turns = not self.take_turns
-            elif self.second_player.has_legal_move():
-                self.take_turns = not self.take_turns
-            else:
-                self.no_legal_move = True
-        else:
-            if self.second_player.has_legal_move():
-                temp = self.board.legal_move(x, y, self.second_player.color)
-                if temp:
-                    self.second_player.move(x, y, temp)
-                    self.take_turns = not self.take_turns
-            elif self.first_player.has_legal_move():
-                self.take_turns = not self.take_turns
-            else:
-                self.no_legal_move = True
-
     def human_turn(self, x, y):
         x //= self.board.space
         y //= self.board.space
@@ -51,9 +27,7 @@ class GameController():
     def ai_turn(self):
         if self.second_player.has_legal_move():
             temp = self.second_player.prioritize()
-            # temp = self.second_player.greedy_strategy()
             pair, flips = temp[0], temp[1]
-            print(pair, flips)
             self.second_player.move(pair[0], pair[1], flips)
             self.take_turns = not self.take_turns
         elif self.first_player.has_legal_move():
@@ -72,11 +46,17 @@ class GameController():
             if self.board.sum_of_black() == self.board.sum_of_white():
                 text("Tie Game!!!", x, y)
             elif self.board.sum_of_black() >= self.board.sum_of_white():
-                text("Black wins", x, y)
+                text("Human wins", x, y)
             else:
-                text("White wins!!!", x, y)
-            text("Black: {0}".format(self.board.sum_of_black()), x, y + self.board.space//2)
-            text("White: {0}".format(self.board.sum_of_white()), x, y + self.board.space)
+                text("AI wins!!!", x, y)
+            text(
+                "Human: {0}".format(self.board.sum_of_black()),
+                x, y + self.board.space//2
+                )
+            text(
+                "AI: {0}".format(self.board.sum_of_white()),
+                x, y + self.board.space
+                )
             if not self.finished:
                 self.record()
                 self.finished = True

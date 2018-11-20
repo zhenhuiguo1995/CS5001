@@ -6,11 +6,13 @@ from ai import AI
 
 LENGTH = 800
 SPACE = 100
+COUNTDOWN = 2000
 tiles = Tiles(LENGTH, SPACE)
 board = Board(LENGTH, SPACE, tiles)
 first_player = Player("Human", board, "black")
 second_player = AI(board, first_player)
 game_controller = GameController(first_player, second_player, board)
+announced = False
 
 
 def setup():
@@ -20,10 +22,16 @@ def setup():
 
 
 def draw():
+    global announced
     if game_controller.take_turns:
+        if not announced:
+            print('Human player\'s turn')
+            announced = True
         if mousePressed and mouseX < LENGTH and mouseY < LENGTH:
             game_controller.human_turn(mouseX, mouseY)
+            announced = False
     else:
-        delay(1000)
+        print('AI\'s turn')
+        delay(COUNTDOWN)
         game_controller.ai_turn()
     game_controller.update()

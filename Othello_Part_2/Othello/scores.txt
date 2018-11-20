@@ -1,4 +1,5 @@
 alfred 50
+disney 40
 ai 22
 fuck 15
 alexa 15
