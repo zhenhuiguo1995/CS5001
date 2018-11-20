@@ -4,9 +4,9 @@ from player import Player
 from tiles import Tiles
 from ai import AI
 
-LENGTH = 800
+LENGTH = 400
 SPACE = 100
-COUNTDOWN = 3000
+COUNTDOWN = 1000
 tiles = Tiles(LENGTH, SPACE)
 board = Board(LENGTH, SPACE, tiles)
 first_player = Player("Human", board, "black")
@@ -27,7 +27,8 @@ def draw():
         if not announced:
             print('Human player\'s turn')
             announced = True
-        if mousePressed and mouseX < LENGTH and mouseY < LENGTH:
+        if mousePressed and mouseX >= 0 and mouseX < LENGTH \
+            and mouseY >= 0 and mouseY < LENGTH:
             game_controller.human_turn(mouseX, mouseY)
             announced = False
     else:

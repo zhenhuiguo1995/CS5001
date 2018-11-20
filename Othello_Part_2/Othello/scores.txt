@@ -1,5 +1,6 @@
 will 52
 alfred 50
+alfred 42
 disney 40
 edward 36
 ??? 31
@@ -15,12 +16,16 @@ wtf??? 14
 alfred 14
 waltson 14
 hemine 14
+alexa 14
 ? 13
 Justin 12
 alice 11
+wish 11
+slaughter 11
 what 10
 ruoji 10
 Allen 9
 underwood 9
 alexa 8
+lilyan 7
 francis 5

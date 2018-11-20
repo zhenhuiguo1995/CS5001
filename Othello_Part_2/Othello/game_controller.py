@@ -62,12 +62,11 @@ class GameController():
                 self.finished = True
 
     def record(self):
-        if not self.finished:
-            answer = self.input('enter your name:')
-            while not answer:
-                answer = self.input('enter your name: ')
-            self.save_to_file(answer, self.board.sum_of_black())
-            self.finished = True
+        answer = self.input('enter your name:')
+        while not answer:
+            answer = self.input('enter your name: ')
+        self.save_to_file(answer, self.board.sum_of_black())
+        self.finished = True
 
     def input(self, message=''):
         from javax.swing import JOptionPane
