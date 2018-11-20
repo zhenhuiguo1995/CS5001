@@ -20,7 +20,6 @@ def setup():
 
 
 def draw():
-    # tiles.display()
     board.display()
     if mousePressed:
         if mouseX > 0 and mouseX < LENGTH and mouseY > 0 and mouseY < LENGTH:
