@@ -7,6 +7,7 @@ class Board():
     def __init__(self, length, space, tile):
         self.length = length
         self.space = space
+        self.tile = tile
         self.tiles = tile.tiles
         self.on_board = set()
         self.to_fill = set()
@@ -33,9 +34,12 @@ class Board():
         self.to_fill.remove((x, y))
 
     def legal_move(self, x, y, color):
-        flip = self.has_flip(x, y, color)
-        if flip and (x, y) not in self.on_board:
-            return flip
+        """If there's flips for this move, return the tiles to be fliped
+        else return False"""
+        if (x, y) not in self.on_board:
+            flip = self.has_flip(x, y, color)
+            if flip:
+                return flip
         else:
             return False
 
@@ -49,9 +53,8 @@ class Board():
         return len(self.to_fill)
 
     def has_flip(self, x, y, color):
-        """determines if there's more legal move to make
-        if there's None, return False
-        If there's some: return True"""
+        """return the set of tiles that will be flipped 
+        by placing a tile in the given position"""
         hor_flip = self.flip_horizontal(x, y, color)
         ver_flip = self.flip_vertical(x, y, color)
         diag_flip = self.flip_diagonal(x, y, color)
@@ -69,10 +72,6 @@ class Board():
             line(0, i * self.space, self.length, self.space * i)
         for i in range(self.length//self.space):
             line(i * self.space, 0, i * self.space, self.length)
-        for i in range(len(self.tiles)):
-            for j in range(len(self.tiles[0])):
-                if self.tiles[i][j] is not None:
-                    self.tiles[i][j].display()
 
     def sum_of_white(self):
         count = 0
@@ -200,3 +199,16 @@ class Board():
             if temp_x < self.tiles[0] and temp_y < self.tiles[0] and (temp_x, temp_y) in self.on_board and self.tiles[temp_x][temp_y].color == color:
                 flip = flip.union(pending)
         return flip
+
+    def copy(self):
+        """returns a copy of the board object"""
+        length = self.length
+        space = self.space
+        on_board = self.on_board.copy()
+        to_fill = self.to_fill.copy()
+        tile = self.tile
+        new_board = Board(length, space, tile)
+        new_board.on_board = on_board
+        new_board.to_fill = to_fill
+        new_board.tiles = self.tiles.copy()
+        return new_board
