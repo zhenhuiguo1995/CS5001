@@ -13,6 +13,7 @@ first_player = Player("Human", board, "black")
 second_player = AI(board, first_player)
 game_controller = GameController(first_player, second_player, board)
 announced = False
+game_end = False
 
 
 def setup():
@@ -22,17 +23,20 @@ def setup():
 
 
 def draw():
-    global announced
-    if game_controller.take_turns:
-        if not announced:
-            print('Human player\'s turn')
-            announced = True
-        if mousePressed and mouseX >= 0 and mouseX < LENGTH \
-            and mouseY >= 0 and mouseY < LENGTH:
-            game_controller.human_turn(mouseX, mouseY)
-            announced = False
+    global announced, game_end
+    if not game_end:
+        if game_controller.take_turns:
+            if not announced:
+                print('Human player\'s turn')
+                announced = True
+            if mousePressed and mouseX >= 0 and mouseX < LENGTH \
+                and mouseY >= 0 and mouseY < LENGTH:
+                game_controller.human_turn(mouseX, mouseY)
+                announced = False
+        else:
+            print('AI\'s turn')
+            delay(COUNTDOWN)
+            game_controller.ai_turn()
+        game_end = game_controller.update()
     else:
-        print('AI\'s turn')
-        delay(COUNTDOWN)
-        game_controller.ai_turn()
-    game_controller.update()
+        game_controller.display()

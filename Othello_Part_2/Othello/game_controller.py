@@ -1,5 +1,6 @@
 from player import Player
 from ai import AI
+import os
 
 
 class GameController():
@@ -39,6 +40,12 @@ class GameController():
         self.board.display()
         self.board.tile.display()
         if self.board.position_left() == 0 or self.no_legal_move:
+            return True
+        else:
+            return False
+
+    def display(self):
+        if self.finished:
             fill(1, 0, 0)
             textSize(30)
             x = self.board.length//2 - self.board.space//2
@@ -57,9 +64,8 @@ class GameController():
                 "AI: {0}".format(self.board.sum_of_white()),
                 x, y + self.board.space
                 )
-            if not self.finished:
-                self.record()
-                self.finished = True
+        if not self.finished:
+            self.record()
 
     def record(self):
         answer = self.input('enter your name:')
@@ -73,16 +79,24 @@ class GameController():
         return JOptionPane.showInputDialog(frame, message)
 
     def save_to_file(self, name, score):
-        file = open('scores.txt')
-        temp = []
-        for line in file:
-            line = line.split()
-            temp.append((line[0], int(line[1])))
-        temp.append((name, int(score)))
-        file.close()
-        temp = sorted(temp, key=lambda x: x[1], reverse=True)
-        file = open('scores.txt', 'w+')
-        for pair in temp:
-            line = pair[0] + ' ' + str(pair[1]) + '\n'
+        if 'scores.txt' not in os.listdir('.'):
+            file = open('scores.txt', 'w+')
+            line = name + ' ' + str(score) + '\n'
             file.write(line)
-        file.close()
+            file.close()
+        else:
+            file = open('scores.txt')
+            temp = []
+            for line in file:
+                temp.append(line)
+            file.close()
+            new_line = name + ' ' + str(score) + '\n'
+            first_line = temp[0].rstrip().split()
+            if int(first_line[1]) >= score:
+                temp.append(new_line)
+            else:
+                temp.insert(0, new_line)
+            file = open('scores.txt', 'w+')
+            for line in temp:
+                file.write(line)
+            file.close()
