@@ -6,6 +6,10 @@ Data structure:
             can contain the tuples of Tiles which are not on the board yet
 
 
+Note: this design is dedicated for part 2 of the Othello project
+Part of the methods and attributes descibed below is not implemented for part 1
+
+
 Classes and methods
 1.class Tile:
     """representing a single Tile object"""
@@ -138,5 +142,25 @@ Classes and methods
         save_file():
             # save the human player's score to the file
 
-# Testing
-if mouse pressed a position beyond the board: -> error
+
+Flow of control:
+    if GameController.take_turns is True:
+        if GameController.Board.is_legal():
+            first_player.move() -> board.add_tile()
+            GameController.take_turns = not GameController.take_turns
+        else:
+            # if it is not a legal move, do nothing, wait for the next mouse press
+            pass
+    else:
+        if GameController.Board.is_legal():
+            second_player.move() -> board.add_tile()
+            GameController.take_turns = not GameController.take_turns
+        else:
+            # if it is not a legal move, do nothing, wait for the next mouse press
+            pass
+    GameController.update():
+        Board.display() # display lines and background
+        Tiles.display() # display each tile object
+        if GameController.Board.no_legal_move():
+            print("message")
+

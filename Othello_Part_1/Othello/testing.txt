@@ -1,0 +1,12 @@
+I mainly tested methods in the Board class, including add_tile, sum_of_black,
+sum_of_white, and positions_left. Nothing went wrong with these tests.
+
+Actually for part1, as long as the coordinates satisifies the condition:
+0 <= coordinates < Board.length, the input is valid
+For coordinates less than 0 or greater or equal to Board.length, it is not 
+valid.
+
+When plays the game with a graphical interfacem it is found that if I click
+the mouse outside the board, it will be view as a "valid" click and since the 
+coordinates is out of range, an error will be raised. So I added a condition 
+to ensure that the click is inside the board area.

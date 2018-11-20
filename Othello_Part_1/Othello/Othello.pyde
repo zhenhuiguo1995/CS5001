@@ -22,6 +22,6 @@ def setup():
 def draw():
     board.display()
     if mousePressed:
-        if mouseX > 0 and mouseX < LENGTH and mouseY > 0 and mouseY < LENGTH:
+        if mouseX >= 0 and mouseX < LENGTH and mouseY >= 0 and mouseY < LENGTH:
                 game_controller.turn(mouseX, mouseY)
     game_controller.update()

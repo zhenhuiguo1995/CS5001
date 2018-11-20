@@ -1,6 +1,3 @@
-from board import Board
-
-
 class Player():
     """Instantiates a human player or a computer player object"""
     def __init__(self, name, board, color):
