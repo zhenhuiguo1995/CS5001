@@ -67,7 +67,7 @@ class Board():
 
     def display(self):
         """Display the board"""
-        background(0, 1, 0)
+        background(0, 0.5, 0)
         for i in range(self.length//self.space):
             line(0, i * self.space, self.length, self.space * i)
         for i in range(self.length//self.space):

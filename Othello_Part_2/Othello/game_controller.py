@@ -86,14 +86,14 @@ class GameController():
             answer = self.input('enter your name:')
             while not answer:
                 answer = self.input('enter your name: ')
-            self.save_file(answer, self.board.sum_of_black())
+            self.save_to_file(answer, self.board.sum_of_black())
             self.finished = True
 
     def input(self, message=''):
         from javax.swing import JOptionPane
         return JOptionPane.showInputDialog(frame, message)
 
-    def save_file(self, name, score):
+    def save_to_file(self, name, score):
         file = open('scores.txt')
         temp = []
         for line in file:
