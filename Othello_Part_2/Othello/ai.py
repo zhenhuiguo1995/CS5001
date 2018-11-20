@@ -47,14 +47,16 @@ class AI(Player):
 
     def block_path():
         "checks if there's move which can block the human player's next move"
-        flips = set()
+        pass
+        """ flips = set()
         block_point = None
         for pair in self.board.to_fill:
             temp = self.board.has_flip(pair[0], pair[1], self.color)
+            new_board = self.board.copy()
             if temp and len(temp) > len(flips):
                 flips = temp
                 max_flip_position = pair
-        return [max_flip_position, flips]
+        return [max_flip_position, flips] """
 
     def prioritize(self):
         temp = self.occupy_corner()
