@@ -1,0 +1,166 @@
+Data structure:
+    1. nested list: stores the tile object as rows and columns
+    2. tuple: a two element tuple(x, y), which represents the position of 
+            a Tile object
+    3. set: contains the tuples of Tiles which is already on the board, also
+            can contain the tuples of Tiles which are not on the board yet
+
+
+Note: this design is dedicated for part 2 of the Othello project
+Part of the methods and attributes descibed below is not implemented for part 1
+
+
+Classes and methods
+1.class Tile:
+    """representing a single Tile object"""
+    attributes:
+        x, y coordinates of a tile
+        diameter of the tile
+        color of the tile: either black or white
+        COEEFICIENT: a constant which represents the scale of the circle to
+            the diameter when drawn on the board
+    methods:
+        display():
+            # display the tile as its color indicates
+
+
+2.class Tiles:
+    """representing a collection of Tiles"""
+    attributes:
+        LENGTH: the length of the Board (which is a square)
+        SPACE: the width/length of each small square
+        tiles: a nested list of Tile objects in each row and column
+    methods:
+        display():
+            # calls every Tile object's display method
+
+
+3.class Board():
+    """representing the board where players player the game"""
+    attributes:
+        length: the length of the square board
+        space: the width/length of each small square
+        tiles: a nested list of Tile objects
+        on_board: a set recording the coordinates of the tiles which 
+            are already on the board
+        to_fill: a set recording the coordinates of the positions which 
+            needs to be filled with tiles 
+    methods:
+        initializes():
+            # initializes the four tiles in the middle and the to_fill set
+        legal_move():
+            # decides if a move is legal. If yes, return the set of tiles
+            # that will be flipped; if not, return False
+        has_legal_move():
+            # decides if the current player has a legal move
+        is_legal():
+            # decides if a move by a player is legal or not
+        add_tile():
+            # adds a tile to tiles if a move is legal
+        display():
+            # display the background and lines of the board
+        position_left():
+            # returns the number of positions left on the board
+        sum_of_black():
+            # returns the sum of black Tiles currently on the board.
+        sum_of_white():
+            # returns the sum of white Tiles currently on the board.
+        flip_horizontal():
+            # decides if adding a tile will lead to any flips on the horizontal
+            # line. If yes, return a non-empty set; if not, return an empty set
+        flip_vertical():
+            # decides if adding a tile will lead to any flips on the vertical
+            # line. If yes, return a non-empty set; if not, return an empty set
+        flip_diagonal():           
+            # decides if adding a tile will lead to any flips on the diagonal
+            # line. If yes, return a non-empty set; if not, return an empty set
+        has_flip():
+            # calls above three flip functions and returns a set containg 
+            # the tiles that will be flipped by the player's actions
+        flip():
+            # flips the tiles to the oppsite color
+        copy():
+            # return a copy of the board object
+
+
+4.class Player():
+    """representing a player object"""
+    attributes:
+        name: the name of the player
+        board: a board object on which the player players
+        color: the color of the Tile that this player plays
+    methods:
+        has_legal_move():
+            # decides if the current player has a legal moves
+        move():
+            # places the tile on board if legal
+
+5.class AI(Player):
+    """representing the AI, inherited from the player class"""
+    attributes:
+        opponent: the opponent player object
+        name: the name of the AI
+        color: the color of the AI
+        board: the board object
+    methods:
+        greedy_strategy():
+            # applies the greedy strategy for the AI, that is, each time place
+            # a tile at the position which leads to the most flips
+        occupy_corner():
+            # occupies the corner of the board if possible
+        prioritize():
+            # blends the greedy_strategy and occupy_corner strategy
+
+6.class game_control_center():
+    """Maintains the state of the game"""
+    attributes:
+        first_player: the frist player object
+        second_player: the second player object
+        board: the board object on which the game is played
+        take_turns: a boolean value representing which player's turn it is
+        no_legal_move: a boolean value representing if there's a legal move
+            for either player at the current turn
+        finished: a boolean value indicating if the game has finished or not
+    methods:
+        update():
+            # carries out necessary actions if one player wins
+            # reports the grades
+        human_turn():
+            # upon receiving a legal mouse press by the human, make the 
+            # corresponding move
+        ai_turn():
+            # the AI player make a move
+        turn():
+            # take turns for both players during part1
+        update():
+            # updates the board and tiles on the scrren
+            # if game ends, record the score in the 
+        record():
+            # prompts the user to enter his/her name when game ends
+        input():
+            # the input function
+        save_file():
+            # save the human player's score to the file
+
+
+Flow of control:
+    if GameController.take_turns is True:
+        if GameController.Board.is_legal():
+            first_player.move() -> board.add_tile()
+            GameController.take_turns = not GameController.take_turns
+        else:
+            # if it is not a legal move, do nothing, wait for the next mouse press
+            pass
+    else:
+        if GameController.Board.is_legal():
+            second_player.move() -> board.add_tile()
+            GameController.take_turns = not GameController.take_turns
+        else:
+            # if it is not a legal move, do nothing, wait for the next mouse press
+            pass
+    GameController.update():
+        Board.display() # display lines and background
+        Tiles.display() # display each tile object
+        if GameController.Board.no_legal_move():
+            print("message")
+
