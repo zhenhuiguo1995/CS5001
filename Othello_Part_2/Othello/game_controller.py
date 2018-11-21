@@ -11,6 +11,8 @@ class GameController():
         self.board = board
         self.finished = False
         self.no_legal_move = False
+        self.player_announced = False
+        self.ai_announced = False
 
     def player_has_move(self):
         return self.player.has_legal_move()
@@ -25,27 +27,19 @@ class GameController():
         """Player place a tile on board"""
         x //= self.board.space
         y //= self.board.space
-        if self.player.has_legal_move():
-            temp = self.board.legal_move(x, y, self.player.color)
-            if temp:
-                self.player.move(x, y, temp)
-                self.take_turns = not self.take_turns
-        elif self.ai.has_legal_move():
+        temp = self.board.legal_move(x, y, self.player.color)
+        if temp:
+            self.player.move(x, y, temp)
             self.take_turns = not self.take_turns
-        else:
-            self.no_legal_move = True
+            self.player_announced = False
 
     def ai_turn(self):
         """AI place a tile on board."""
-        if self.ai.has_legal_move():
-            temp = self.ai.prioritize()
-            pair, flips = temp[0], temp[1]
-            self.ai.move(pair[0], pair[1], flips)
-            self.take_turns = not self.take_turns
-        elif self.player.has_legal_move():
-            self.take_turns = not self.take_turns
-        else:
-            self.no_legal_move = True
+        temp = self.ai.prioritize()
+        pair, flips = temp[0], temp[1]
+        self.ai.move(pair[0], pair[1], flips)
+        self.take_turns = not self.take_turns
+        self.ai_announced = False
 
     def display(self):
         """Display the board and the tiles"""
