@@ -9,9 +9,9 @@ SPACE = 100
 COUNTDOWN = 1000
 tiles = Tiles(LENGTH, SPACE)
 board = Board(LENGTH, SPACE, tiles)
-first_player = Player("Human", board, "black")
-second_player = AI(board, first_player)
-game_controller = GameController(first_player, second_player, board)
+player = Player("Player", board, "black")
+ai = AI(board, player)
+game_controller = GameController(player, ai, board)
 announced = False
 game_end = False
 
@@ -27,16 +27,18 @@ def draw():
     if not game_end:
         if game_controller.take_turns:
             if not announced:
-                print('Human player\'s turn')
+                print('Player\'s turn')
                 announced = True
             if mousePressed and mouseX >= 0 and mouseX < LENGTH \
                 and mouseY >= 0 and mouseY < LENGTH:
-                game_controller.human_turn(mouseX, mouseY)
+                game_controller.player_turn(mouseX, mouseY)
                 announced = False
         else:
             print('AI\'s turn')
             delay(COUNTDOWN)
             game_controller.ai_turn()
-        game_end = game_controller.update()
+        game_controller.display()
+        game_end = not game_controller.game_can_proceed()
     else:
         game_controller.display()
+        game_controller.announce()

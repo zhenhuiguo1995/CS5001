@@ -4,39 +4,51 @@ import os
 
 
 class GameController():
-    def __init__(self, human, ai, board):
-        self.first_player = human
-        self.second_player = ai
+    def __init__(self, player, ai, board):
+        self.player = player
+        self.ai = ai
         self.take_turns = True
         self.board = board
         self.finished = False
         self.no_legal_move = False
 
-    def human_turn(self, x, y):
+    def player_has_move(self):
+        return self.player.has_legal_move()
+
+    def ai_has_move(self):
+        return self.ai.has_legal_move()
+
+    def game_can_proceed(self):
+        return self.player_has_move() or self.ai_has_move()
+
+    def player_turn(self, x, y):
+        """Player place a tile on board"""
         x //= self.board.space
         y //= self.board.space
-        if self.first_player.has_legal_move():
-            temp = self.board.legal_move(x, y, self.first_player.color)
+        if self.player.has_legal_move():
+            temp = self.board.legal_move(x, y, self.player.color)
             if temp:
-                self.first_player.move(x, y, temp)
+                self.player.move(x, y, temp)
                 self.take_turns = not self.take_turns
-        elif self.second_player.has_legal_move():
+        elif self.ai.has_legal_move():
             self.take_turns = not self.take_turns
         else:
             self.no_legal_move = True
 
     def ai_turn(self):
-        if self.second_player.has_legal_move():
-            temp = self.second_player.prioritize()
+        """AI place a tile on board."""
+        if self.ai.has_legal_move():
+            temp = self.ai.prioritize()
             pair, flips = temp[0], temp[1]
-            self.second_player.move(pair[0], pair[1], flips)
+            self.ai.move(pair[0], pair[1], flips)
             self.take_turns = not self.take_turns
-        elif self.first_player.has_legal_move():
+        elif self.player.has_legal_move():
             self.take_turns = not self.take_turns
         else:
             self.no_legal_move = True
 
-    def update(self):
+    def display(self):
+        """Display the board and the tiles"""
         self.board.display()
         self.board.tile.display()
         if self.board.position_left() == 0 or self.no_legal_move:
@@ -44,20 +56,21 @@ class GameController():
         else:
             return False
 
-    def display(self):
+    def announce(self):
+        """Announce the score and record the name"""
         if self.finished:
             fill(1, 0, 0)
             textSize(30)
-            x = self.board.length//2 - self.board.space//2
-            y = self.board.length//2
+            x = self.board.length//2 - self.board.space
+            y = self.board.length//2 - self.board.space//2
             if self.board.sum_of_black() == self.board.sum_of_white():
                 text("Tie Game!!!", x, y)
             elif self.board.sum_of_black() >= self.board.sum_of_white():
-                text("Human wins", x, y)
+                text("Player wins", x, y)
             else:
                 text("AI wins!!!", x, y)
             text(
-                "Human: {0}".format(self.board.sum_of_black()),
+                "Player: {0}".format(self.board.sum_of_black()),
                 x, y + self.board.space//2
                 )
             text(
@@ -68,6 +81,7 @@ class GameController():
             self.record()
 
     def record(self):
+        """Record the player's name and write it to file"""
         answer = self.input('enter your name:')
         while not answer:
             answer = self.input('enter your name: ')
@@ -75,10 +89,12 @@ class GameController():
         self.finished = True
 
     def input(self, message=''):
+        """Prompts the user a window to input the name"""
         from javax.swing import JOptionPane
         return JOptionPane.showInputDialog(frame, message)
 
     def save_to_file(self, name, score):
+        """Save the player's name and score to a file"""
         if 'scores.txt' not in os.listdir('.'):
             file = open('scores.txt', 'w+')
             line = name + ' ' + str(score) + '\n'
