@@ -37,8 +37,8 @@ class Board():
         self.to_fill.remove((x, y))
 
     def legal_move(self, x, y, color):
-        """If there's flips for this move, return the tiles to be fliped
-        else return False"""
+        """If there's flips for this move, return the tiles to be fliped as a
+        set, else return False"""
         if (x, y) not in self.on_board:
             flip = self.has_flip(x, y, color)
             if flip:
@@ -49,6 +49,8 @@ class Board():
             return False
 
     def has_legal_move(self, color):
+        """"If there's a legal move at any position on the board, return
+        True, else return False"""
         for pair in self.to_fill:
             if self.legal_move(pair[0], pair[1], color):
                 return True

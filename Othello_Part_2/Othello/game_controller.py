@@ -55,7 +55,7 @@ class GameController():
         if self.finished:
             fill(1, 0, 0)
             textSize(30)
-            x = self.board.length//2 - self.board.space
+            x = self.board.length//2 - self.board.space//2
             y = self.board.length//2 - self.board.space//2
             if self.board.sum_of_black() == self.board.sum_of_white():
                 text("Tie Game!!!", x, y)
