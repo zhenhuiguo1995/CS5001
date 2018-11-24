@@ -126,8 +126,8 @@ class AI(Player):
             return False
 
     def prioritize(self):
-        """If a corner can be occupied, occupy it; otherwise adpots the greedy
-        strategy"""
+        """If a corner can be occupied, occupy it; 
+        otherwise adpots the greedy strategy"""
         temp = self.occupy_corner()
         if temp:
             return temp
