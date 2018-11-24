@@ -4,7 +4,7 @@ from player import Player
 from tiles import Tiles
 from ai import AI
 
-LENGTH = 400
+LENGTH = 800
 SPACE = 100
 COUNTDOWN = 2000
 tiles = Tiles(LENGTH, SPACE)

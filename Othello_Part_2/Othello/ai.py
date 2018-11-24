@@ -19,8 +19,8 @@ class AI(Player):
                 max_flip_position = pair
         return [max_flip_position, flips]
 
-    def occupy_corner(self):
-        """chechs if the corners are legal moves"""
+    """ def occupy_corner(self):
+        chechs if the corners are legal moves
         length = self.board.length
         max_flip_postion = (length//2, length//2)
         flips = set()
@@ -47,39 +47,12 @@ class AI(Player):
             max_flip_postion = (length - 1, length - 1)
             flips = lower_right
         if lower_right is False:
-            print("lower right corner cannot be occupied")
+            print("lower right corner can not be occupied")
         if len(flips) > 0:
             return [max_flip_postion, flips]
         else:
             return False
-
-    def block_path():
-        "checks if there's move which can block the human player's next move"
-        pass
-        """ flips = set()
-        block_point = None
-        for pair in self.board.to_fill:
-            temp = self.board.has_flip(pair[0], pair[1], self.color)
-            new_board = self.board.copy()
-            if temp and len(temp) > len(flips):
-                flips = temp
-                max_flip_position = pair
-        return [max_flip_position, flips] """
+    """
 
     def prioritize(self):
-        temp = self.occupy_corner()
-        length = self.board.length
-        print(temp)
-        if temp:
-            if (0, 0) in temp:
-                print("(0, 0) can be reached")
-            if (0, length - 1) in temp:
-                print("(0, 7) can be reached")
-            if (length - 1, 0) in temp:
-                print("(7, 0) can be reached")
-            if (length - 1, length - 1) in temp:
-                print("(7, 7) can be reached")
-            return temp
-        else:
-            print("No corner can be occupied")
-            return self.greedy_strategy()
+        return self.greedy_strategy()

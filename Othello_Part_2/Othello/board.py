@@ -29,6 +29,7 @@ class Board():
         self.add_tile(middle_x, middle_y, "white")
 
     def add_tile(self, x, y, color):
+        """Add a tile on the board"""
         x_coordinate = x * self.space + self.space//2
         y_coordinate = y * self.space + self.space//2
         self.tiles[x][y] = Tile(x_coordinate, y_coordinate, self.space, color)
@@ -176,6 +177,7 @@ class Board():
                     and (temp_x, temp_y) in self.on_board \
                     and self.tiles[temp_x][temp_y].color == color:
                 flip = flip.union(pending)
+                # print("upper_left")
         # search lower-right
         if x <= self.count - 2 and y <= self.count - 2 \
                 and (x + 1, y + 1) in self.on_board \
@@ -193,6 +195,7 @@ class Board():
                     and (temp_x, temp_y) in self.on_board \
                     and self.tiles[temp_x][temp_y].color == color:
                 flip = flip.union(pending)
+                # print("lower right")
         # search upper-right
         if x <= self.count - 2 and y >= 2 \
                 and (x + 1, y - 1) in self.on_board \
@@ -210,6 +213,7 @@ class Board():
                     and (temp_x, temp_y) in self.on_board \
                     and self.tiles[temp_x][temp_y].color == color:
                 flip = flip.union(pending)
+                # print("upper right")
         # search lower-left
         if x >= 2 and y <= self.count - 2 \
                 and (x - 1, y + 1) in self.on_board \
@@ -227,6 +231,7 @@ class Board():
                     and (temp_x, temp_y) in self.on_board \
                     and self.tiles[temp_x][temp_y].color == color:
                 flip = flip.union(pending)
+                # print("lower left")
         return flip
 
     def copy(self):
