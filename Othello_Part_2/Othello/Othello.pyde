@@ -6,7 +6,7 @@ from ai import AI
 
 LENGTH = 800
 SPACE = 100
-COUNTDOWN = 500
+COUNTDOWN = 1500
 tiles = Tiles(LENGTH, SPACE)
 board = Board(LENGTH, SPACE, tiles)
 player = Player("Player", board, "black")
