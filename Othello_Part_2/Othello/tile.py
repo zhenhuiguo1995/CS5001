@@ -1,10 +1,10 @@
 class Tile():
     """Representing a tile"""
     def __init__(self, x, y, diameter, color):
-        COEEFFCIENT = 0.9
+        self.COEFFICIENT = 0.9
         self.x = x
         self.y = y
-        self.diameter = diameter * COEEFFCIENT
+        self.diameter = diameter * self.COEFFICIENT
         self.color = color
 
     def display(self):

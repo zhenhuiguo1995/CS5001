@@ -57,6 +57,7 @@ class Board():
         return False
 
     def position_left(self):
+        """Returns the positions left on the board"""
         return len(self.to_fill)
 
     def has_flip(self, x, y, color):
@@ -236,15 +237,3 @@ class Board():
                 # print("lower left")
         return flip
 
-    def copy(self):
-        """returns a copy of the board object"""
-        length = self.length
-        space = self.space
-        on_board = self.on_board.copy()
-        to_fill = self.to_fill.copy()
-        tile = self.tile
-        new_board = Board(length, space, tile)
-        new_board.on_board = on_board
-        new_board.to_fill = to_fill
-        new_board.tiles = self.tiles.copy()
-        return new_board
