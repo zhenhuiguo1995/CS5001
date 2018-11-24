@@ -1,0 +1,23 @@
+Strategies for AI:
+The AI mainly takes three strategies:
+1. occupy corner strategies: if any of the four corner can be occupied, occupy
+it
+2. greedy strategy: place a tile at the position which leads to the most 
+flips
+3. corner protection strategy: don't place a tile at the surrounding positions
+of the corners if there's any other position to fill. This strategy is embedded
+within the greedy strategy
+
+There are priorities for these strategies: the occupy corner strategy always 
+comes first, corner protection strategy comes second, and greedy strategy will 
+be applied if neither of the above two applies. 
+
+I would say you cannot beat this AI if you just pick a move randomly
+
+I think the AI can be improved by two ways:
+1. Use action points, that is, the total amount of moves a player/AI can
+have as a measurement of a move. The aim of the AI is to limit the opponent's 
+action points as low as possible.
+2. Add a predict function: that is, place a tile at aby possible position and 
+make a simulation of possible opponent actions. After analyzing all possible 
+actions, choose the move that the opponent will have the least action points  

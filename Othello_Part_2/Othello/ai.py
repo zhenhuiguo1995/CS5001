@@ -63,6 +63,7 @@ class AI(Player):
         else:
             return [conrer_flip_position, corner_flips]
 
+    """
     def reduce_corner_effect(self):
         # reduces the effect of the corner by occupying
         # its surrounding position
@@ -96,6 +97,7 @@ class AI(Player):
                     position = pair
         if flips:
             return [position, flips]
+    """
 
     def occupy_corner(self):
         """chechs if the corners are legal moves"""
@@ -129,7 +131,5 @@ class AI(Player):
         temp = self.occupy_corner()
         if temp:
             return temp
-        temp = self.reduce_corner_effect()
-        if temp:
-            return temp
-        return self.greedy_strategy()
+        else:
+            return self.greedy_strategy()
