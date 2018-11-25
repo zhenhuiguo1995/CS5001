@@ -1,6 +1,12 @@
 [
-  "ai_test.py::test_constructor",
-  "ai_test.py::test_greedy_strategy",
-  "ai_test.py::test_occupy_corner",
-  "ai_test.py::test_prioritize"
+  "board_test.py::test_constructor",
+  "board_test.py::test_add_tile",
+  "board_test.py::test_position_left",
+  "board_test.py::test_sum_of_black",
+  "board_test.py::test_sum_of_white",
+  "board_test.py::test_flip_horizontal",
+  "board_test.py::test_flip_vertical",
+  "board_test.py::test_flip_diagonal",
+  "board_test.py::test_has_legal_move",
+  "board_test.py::test_legal_move"
 ]

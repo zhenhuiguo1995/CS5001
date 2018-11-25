@@ -4,6 +4,7 @@ from tiles import Tiles
 
 
 def test_constructor():
+    """Test the constructor of the Player class."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -13,6 +14,7 @@ def test_constructor():
 
 
 def test_has_legal_move():
+    """Test the has_legal_move method."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -20,6 +22,7 @@ def test_has_legal_move():
 
 
 def test_move():
+    """Test the move method."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')

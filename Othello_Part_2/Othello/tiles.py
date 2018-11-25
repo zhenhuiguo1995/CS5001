@@ -9,6 +9,7 @@ class Tiles:
             ]
 
     def display(self):
+        """Display a collection of tiles."""
         for rows in self.tiles_list:
             for tile in rows:
                 if tile is not None:

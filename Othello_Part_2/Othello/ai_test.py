@@ -5,6 +5,7 @@ from tiles import Tiles
 
 
 def test_constructor():
+    """Test the constructor."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -21,6 +22,7 @@ def test_constructor():
 
 
 def test_greedy_strategy():
+    """Test the greedy strategy of the AI."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -40,6 +42,7 @@ def test_greedy_strategy():
 
 
 def test_occupy_corner():
+    """Test the occupy corner strategy of the AI."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -52,6 +55,7 @@ def test_occupy_corner():
 
 
 def test_prioritize():
+    """Test the priority of occupy corner strategy and greedy strategy."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')

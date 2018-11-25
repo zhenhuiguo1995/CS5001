@@ -3,7 +3,7 @@ from tile import Tile
 
 class Board():
     """Draws the board and handles interaction between
-    player and computer"""
+    player and computer."""
     def __init__(self, length, space, tiles):
         self.length = length
         self.space = space
@@ -16,6 +16,7 @@ class Board():
         self.initialize()
 
     def initialize(self):
+        """None -> None"""
         # initialize the to_fill set
         # put four tiles on the middle of the board
         for i in range(self.length//self.space):
@@ -29,7 +30,8 @@ class Board():
         self.add_tile(middle_x, middle_y, "white")
 
     def add_tile(self, x, y, color):
-        """Add a tile on the board"""
+        """Given two Integers and a String, return nothing.
+        Integer Integer String -> None"""
         x_coordinate = x * self.space + self.space//2
         y_coordinate = y * self.space + self.space//2
         self.tiles_list[x][y] = Tile(
@@ -39,8 +41,9 @@ class Board():
         self.to_fill.remove((x, y))
 
     def legal_move(self, x, y, color):
-        """If there's flips for this move, return the tiles to be fliped as a
-        set, else return False"""
+        """Given two Integers and a String, return either a boolean, or a set
+        containing the set of tiles to be flipped.
+        Integer Integer String -> Boolean/set"""
         if (x, y) not in self.on_board:
             flip = self.has_flip(x, y, color)
             if flip:
@@ -51,20 +54,21 @@ class Board():
             return False
 
     def has_legal_move(self, color):
-        """"If there's a legal move at any position on the board, return
-        True, else return False"""
+        """"Given a String, return a boolean value
+        String -> Boolean"""
         for pair in self.to_fill:
             if self.legal_move(pair[0], pair[1], color):
                 return True
         return False
 
     def position_left(self):
-        """Returns the positions left on the board"""
+        """Returns an integer representing the positions left on the board.
+        None -> Integer"""
         return len(self.to_fill)
 
     def has_flip(self, x, y, color):
-        """return the set of tiles that will be flipped
-        by placing a tile in the given position"""
+        """Given two Integers and a String, return a set.
+        Integer Integer String -> set"""
         hor_flip = self.flip_horizontal(x, y, color)
         ver_flip = self.flip_vertical(x, y, color)
         diag_flip = self.flip_diagonal(x, y, color)
@@ -72,11 +76,14 @@ class Board():
         return flips
 
     def flip(self, flips, color):
+        """Given a set and a string, return nothing.
+        Set String -> None"""
         for pair in flips:
             self.tiles_list[pair[0]][pair[1]].color = color
 
     def display(self):
-        """Display the board"""
+        """Display the board.
+        None -> None"""
         background(0, 0.5, 0)
         for i in range(self.count):
             line(0, i * self.space, self.length, self.space * i)
@@ -84,6 +91,8 @@ class Board():
             line(i * self.space, 0, i * self.space, self.length)
 
     def sum_of_white(self):
+        """Returns an integer representing the sum of white tiles on board.
+        None -> Integer"""
         count = 0
         for rows in self.tiles_list:
             for tile in rows:
@@ -92,6 +101,8 @@ class Board():
         return count
 
     def sum_of_black(self):
+        """Return a integer representing the sum of black tiles on board.
+        None -> Integer"""
         count = 0
         for rows in self.tiles_list:
             for tile in rows:
@@ -100,9 +111,8 @@ class Board():
         return count
 
     def flip_horizontal(self, x, y, color):
-        """determines if there's some tiles to flip horizontally
-        if yes, return the set of position of the tiles that will be flipped
-        if not, return False"""
+        """Given two Integers and a String, return a set.
+        Integer Integer String -> Set"""
         flip = set()
         # search left
         if x >= 2 and (x - 1, y) in self.on_board \
@@ -131,9 +141,8 @@ class Board():
         return flip
 
     def flip_vertical(self, x, y, color):
-        """determines if there's some tiles to flip horizontally
-        if yes, return the set of position of the tiles that will be flipped
-        if not, return False"""
+        """Given two Integers and a String, return a set.
+        Integer Integer String -> Set"""
         flip = set()
         # search upwards
         if y >= 2 and (x, y - 1) in self.on_board \
@@ -162,9 +171,8 @@ class Board():
         return flip
 
     def flip_diagonal(self, x, y, color):
-        """determines if there's some tiles to flip along the diagonal
-        if yes, return the set of position of the tiles that will be flipped
-        if not, return False"""
+        """Given two Integers and a String, return a set.
+        Integer Integer String -> Set"""
         flip = set()
         # search upper-left
         if x >= 2 and y >= 2 and (x - 1, y - 1) in self.on_board \

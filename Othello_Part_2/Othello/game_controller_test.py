@@ -6,6 +6,7 @@ from tiles import Tiles
 
 
 def test_constructor():
+    """Test the constructor of the GameController class."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -22,6 +23,7 @@ def test_constructor():
 
 
 def test_player_has_move():
+    """Test the player_has_move method."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -34,6 +36,7 @@ def test_player_has_move():
 
 
 def test_ai_has_move():
+    """Test the ai_has_move method."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -46,6 +49,7 @@ def test_ai_has_move():
 
 
 def test_game_can_proceed():
+    """Test the game_can_proceed method."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -58,6 +62,7 @@ def test_game_can_proceed():
 
 
 def test_player_turn():
+    """Test the player_turn method."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -72,6 +77,7 @@ def test_player_turn():
 
 
 def test_ai_turn():
+    """Test the ai_turn method."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     player = Player('Alfred', board, 'black')
@@ -83,4 +89,3 @@ def test_ai_turn():
     assert game_controller.take_turns is False
     game_controller.ai_turn()
     assert game_controller.take_turns is True
-

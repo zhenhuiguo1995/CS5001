@@ -17,7 +17,8 @@ class AI(Player):
         self.initializes()
 
     def initializes(self):
-        """Initializes the around_corner set"""
+        """Initializes the around_corner set.
+        None -> None"""
         count = self.board.count
         # add positions around the upper_left corner
         self.upper_left_corner.add((1, 0))
@@ -41,9 +42,9 @@ class AI(Player):
         self.corner = self.corner.union(self.lower_right_corner)
 
     def greedy_strategy(self):
-        """Add a tile at the position which leads to the most flips,
-        also protects the corner by not adding a tile at its surroundings
-        when there's other available positions"""
+        """Return a list of two elements, the first is a tuple representing
+        a position, the second is a set containing the tiles to be fliped
+        None -> List"""
         flips = set()
         max_flip_position = (0, 0)
         corner_flips = set()
@@ -64,7 +65,9 @@ class AI(Player):
             return [conrer_flip_position, corner_flips]
 
     def occupy_corner(self):
-        """chechs if the corners are legal moves"""
+        """Returns either a boolean value, or a list of two elements, the
+        first is a tuple representing a position, the second is a set.
+        None -> Boolean/List"""
         count = self.board.count
         max_flip_postion = (count//2, count//2)
         flips = set()
@@ -90,8 +93,8 @@ class AI(Player):
             return False
 
     def prioritize(self):
-        """If a corner can be occupied, occupy it;
-        otherwise adpots the greedy strategy"""
+        """Return a list.
+        None -> List"""
         temp = self.occupy_corner()
         if temp:
             return temp

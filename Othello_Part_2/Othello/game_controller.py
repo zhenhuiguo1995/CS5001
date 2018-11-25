@@ -15,16 +15,23 @@ class GameController():
         self.ai_announced = False
 
     def player_has_move(self):
+        """Return a boolean value representing if the player has a
+        legal move or not."""
         return self.player.has_legal_move()
 
     def ai_has_move(self):
+        """Return a boolean value representing if the ai has a
+        legal move or not."""
         return self.ai.has_legal_move()
 
     def game_can_proceed(self):
+        """Return a boolean value representing if either the player or the
+        ai has a legal move or not."""
         return self.player_has_move() or self.ai_has_move()
 
     def player_turn(self, x, y):
-        """Player place a tile on board"""
+        """Given two Integers, return nothong.
+        Integer Integer -> None"""
         x //= self.board.space
         y //= self.board.space
         temp = self.board.legal_move(x, y, self.player.color)
@@ -42,7 +49,7 @@ class GameController():
         self.ai_announced = False
 
     def display(self):
-        """Display the board and the tiles"""
+        """Display the board and the tiles."""
         self.board.display()
         self.board.tiles.display()
         if self.board.position_left() == 0 or self.no_legal_move:
@@ -51,7 +58,7 @@ class GameController():
             return False
 
     def announce(self):
-        """Announce the score and record the name"""
+        """Announce the score and record the name."""
         if self.finished:
             fill(1, 0, 0)
             textSize(30)
@@ -75,7 +82,7 @@ class GameController():
             self.record()
 
     def record(self):
-        """Record the player's name and write it to file"""
+        """Record the player's name and write it to file."""
         answer = self.input('enter your name:')
         while not answer:
             answer = self.input('enter your name: ')
@@ -83,12 +90,12 @@ class GameController():
         self.finished = True
 
     def input(self, message=''):
-        """Prompts the user a window to input the name"""
+        """Prompts the user a window to input the name."""
         from javax.swing import JOptionPane
         return JOptionPane.showInputDialog(frame, message)
 
     def save_to_file(self, name, score):
-        """Save the player's name and score to a file"""
+        """Save the player's name and score to a file."""
         if 'scores.txt' not in os.listdir('.'):
             file = open('scores.txt', 'w+')
             line = name + ' ' + str(score) + '\n'

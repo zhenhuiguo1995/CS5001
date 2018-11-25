@@ -4,6 +4,7 @@ import random as rnd
 
 
 def test_constructor():
+    """Test the constructor."""
     tiles = Tiles(600, 100)
     board = Board(600, 100, tiles)
     assert board.space == 100
@@ -18,6 +19,7 @@ def test_constructor():
 
 
 def test_add_tile():
+    """Test the add_tile method of the Board class."""
     tiles = Tiles(600, 100)
     board = Board(600, 100, tiles)
     i = rnd.randint(0, board.count - 1)
@@ -31,6 +33,7 @@ def test_add_tile():
 
 
 def test_position_left():
+    """Test the position_left method of the Board class."""
     tiles = Tiles(600, 100)
     board = Board(600, 100, tiles)
     assert board.position_left() == (board.length//board.space) ** 2 - 4
@@ -39,6 +42,7 @@ def test_position_left():
 
 
 def test_sum_of_black():
+    """Test the sum_of_black method of the Board class."""
     tiles = Tiles(600, 100)
     board = Board(600, 100, tiles)
     assert board.sum_of_black() == 2
@@ -47,6 +51,7 @@ def test_sum_of_black():
 
 
 def test_sum_of_white():
+    """Test the sum_of_white method of the Board class."""
     tiles = Tiles(600, 100)
     board = Board(600, 100, tiles)
     assert board.sum_of_white() == 2
@@ -55,6 +60,7 @@ def test_sum_of_white():
 
 
 def test_flip_horizontal():
+    """Test the flip_horizontal method of the Board class."""
     tiles = Tiles(600, 100)
     board = Board(600, 100, tiles)
     assert len(board.flip_horizontal(0, 0, 'white')) == 0
@@ -68,6 +74,7 @@ def test_flip_horizontal():
 
 
 def test_flip_vertical():
+    """Test the flip_vertical method of the Board class."""
     tiles = Tiles(600, 100)
     board = Board(600, 100, tiles)
     assert len(board.flip_vertical(0, 0, 'white')) == 0
@@ -81,6 +88,7 @@ def test_flip_vertical():
 
 
 def test_flip_diagonal():
+    """Test the flip_diagonal method of the Board class."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     assert len(board.flip_diagonal(0, 0, 'white')) == 0
@@ -108,6 +116,7 @@ def test_flip_diagonal():
 
 
 def test_has_legal_move():
+    """Test the has_legal_move method of the Board class."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     assert board.has_legal_move('black') is True
@@ -119,6 +128,7 @@ def test_has_legal_move():
 
 
 def test_legal_move():
+    """Test the legal_move method of the Board class."""
     tiles = Tiles(800, 100)
     board = Board(800, 100, tiles)
     for pair in board.on_board:
