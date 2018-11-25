@@ -8,7 +8,7 @@ def test_constructor():
     board = Board(600, 100, tiles)
     assert board.space == 100
     assert board.length == 600
-    assert board.tile is tiles
+    assert board.tiles is tiles
     assert board.count == board.length//board.space
     assert len(board.on_board) == 4
     assert len(board.to_fill) == (
@@ -23,9 +23,9 @@ def test_add_tile():
     i = rnd.randint(0, board.count - 1)
     j = rnd.randint(0, board.count - 1)
     board.add_tile(i, j, 'white')
-    assert board.tiles[i][j].x == i * board.space + board.space//2
-    assert board.tiles[i][j].y == j * board.space + board.space//2
-    assert board.tiles[i][j].color == 'white'
+    assert board.tiles_list[i][j].x == i * board.space + board.space//2
+    assert board.tiles_list[i][j].y == j * board.space + board.space//2
+    assert board.tiles_list[i][j].color == 'white'
     assert (i, j) in board.on_board
     assert (i, j) not in board.to_fill
 
@@ -113,7 +113,7 @@ def test_has_legal_move():
     assert board.has_legal_move('black') is True
     assert board.has_legal_move('white') is True
     for pair in board.on_board:
-        board.tiles[pair[0]][pair[1]].color = 'black'
+        board.tiles_list[pair[0]][pair[1]].color = 'black'
     assert board.has_legal_move('black') is False
     assert board.has_legal_move('white') is False
 

@@ -44,7 +44,7 @@ class GameController():
     def display(self):
         """Display the board and the tiles"""
         self.board.display()
-        self.board.tile.display()
+        self.board.tiles.display()
         if self.board.position_left() == 0 or self.no_legal_move:
             return True
         else:
