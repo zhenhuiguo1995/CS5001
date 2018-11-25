@@ -63,42 +63,6 @@ class AI(Player):
         else:
             return [conrer_flip_position, corner_flips]
 
-    """
-    def reduce_corner_effect(self):
-        # reduces the effect of the corner by occupying
-        # its surrounding position
-        # checks if the upper_left corner is occupied
-        count = self.board.count
-        flips = set()
-        position = (0, 0)
-        if (0, 0) in self.board.on_board:
-            for pair in self.upper_left_corner:
-                temp = self.board.legal_move(0, 0, self.color)
-                if temp and len(temp) > len(flips):
-                    flips = temp
-                    position = pair
-        if (count - 1, 0) in self.board.on_board:
-            for pair in self.upper_right_corner:
-                temp = self.board.legal_move(count - 1, 0, self.color)
-                if temp and len(temp) > len(flips):
-                    flips = temp
-                    position = pair
-        if (0, count - 1) in self.board.on_board:
-            for pair in self.lower_left_corner:
-                temp = self.board.legal_move(0, count - 1, self.color)
-                if temp and len(temp) > len(flips):
-                    flips = temp
-                    position = pair
-        if (count - 1, count - 1) in self.board.on_board:
-            for pair in self.lower_right_corner:
-                temp = self.board.legal_move(count - 1, count - 1, self.color)
-                if temp and len(temp) > len(flips):
-                    flips = temp
-                    position = pair
-        if flips:
-            return [position, flips]
-    """
-
     def occupy_corner(self):
         """chechs if the corners are legal moves"""
         count = self.board.count

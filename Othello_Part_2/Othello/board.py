@@ -236,4 +236,3 @@ class Board():
                 flip = flip.union(pending)
                 # print("lower left")
         return flip
-
